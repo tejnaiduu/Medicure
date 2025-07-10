@@ -1,0 +1,60 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and layout */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Links as buttons (used in Register/Login for navigation) */
+button[type="button"] {
+  background: none;
+  border: none;
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Form inputs */
+input {
+  font-family: inherit;
+}
+
+/* Scrollbar Styling (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+/* Centered error message or info (optional) */
+.center-text {
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
+
+/* Smooth transitions on page elements */
+html {
+  scroll-behavior: smooth;
+}
