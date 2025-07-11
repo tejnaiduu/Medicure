@@ -8,8 +8,8 @@
 /* Body and layout */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
+  background-color: #121212; /* Dark background */
+  color: #f1f1f1; /* Light text */
   line-height: 1.6;
 }
 
@@ -18,13 +18,14 @@ button {
   font-family: inherit;
   font-weight: 500;
   transition: background-color 0.3s ease, color 0.3s ease;
+  color: #f1f1f1;
 }
 
 /* Links as buttons (used in Register/Login for navigation) */
 button[type="button"] {
   background: none;
   border: none;
-  color: #1976d2;
+  color: #4a90e2; /* Blue link on dark */
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
@@ -33,24 +34,32 @@ button[type="button"] {
 /* Form inputs */
 input {
   font-family: inherit;
+  background-color: #1e1e2f;
+  color: #f1f1f1;
+  border: 1px solid #444;
+  border-radius: 6px;
 }
 
-/* Scrollbar Styling (optional) */
+input::placeholder {
+  color: #bbb;
+}
+
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: #1e1e1e;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background-color: #444;
   border-radius: 6px;
 }
 
-/* Centered error message or info (optional) */
+/* Centered error message or info */
 .center-text {
   text-align: center;
-  color: #999;
+  color: #bbb;
   margin-top: 20px;
 }
 

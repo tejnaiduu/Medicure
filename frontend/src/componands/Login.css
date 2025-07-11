@@ -2,15 +2,16 @@
   max-width: 400px;
   margin: 80px auto;
   padding: 40px;
-  background-color: #ffffff;
+  background-color: #1e1e2f; /* Dark background */
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   font-family: 'Segoe UI', sans-serif;
   text-align: center;
+  color: #f1f1f1; /* Light text */
 }
 
 .login-container h2 {
-  color: #222;
+  color: #f1f1f1;
   margin-bottom: 24px;
   font-size: 28px;
 }
@@ -19,22 +20,28 @@
   width: 100%;
   padding: 14px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  background-color: #2c2c3e; /* Input background */
+  color: #f1f1f1;
+  border: 1px solid #444;
   border-radius: 8px;
   font-size: 15px;
   transition: 0.2s ease;
 }
 
+.login-container form input::placeholder {
+  color: #bbb;
+}
+
 .login-container form input:focus {
   outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 5px rgba(25, 118, 210, 0.3);
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
 }
 
 .login-container form button {
   width: 100%;
   padding: 14px;
-  background-color: #28a745;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 8px;
@@ -46,5 +53,5 @@
 }
 
 .login-container form button:hover {
-  background-color: #1e7c35;
+  background-color: #388e3c;
 }

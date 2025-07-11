@@ -1,18 +1,32 @@
+// Chat.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Chat.css';
 import { useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 function Chat() {
   const [query, setQuery] = useState('');
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!token) return navigate('/login');
     fetchHistory();
+  }, []);
+
+  useEffect(() => {
+    const closeDropdown = e => {
+      if (!e.target.closest('.profile-dropdown')) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('click', closeDropdown);
+    return () => document.removeEventListener('click', closeDropdown);
   }, []);
 
   const fetchHistory = async () => {
@@ -36,7 +50,7 @@ function Chat() {
       response: 'Analyzing...'
     };
 
-    setSelectedHistory(tempChat);  // Show temporary message
+    setSelectedHistory(tempChat);
     setQuery('');
 
     try {
@@ -52,7 +66,7 @@ function Chat() {
         response: res.data.response
       };
       setHistory(prev => [...prev, newChat]);
-      setSelectedHistory(newChat);  // Update with real response
+      setSelectedHistory(newChat);
     } catch (err) {
       alert('Error sending message');
     }
@@ -60,6 +74,7 @@ function Chat() {
 
   const handleSelectHistory = chat => {
     setSelectedHistory(chat);
+    if (window.innerWidth < 768) setSidebarOpen(false);
   };
 
   const handleDelete = async id => {
@@ -100,10 +115,10 @@ function Chat() {
 
   return (
     <div className="chat-page">
-      <div className="chat-sidebar">
+      <div className={`chat-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h3>Medicure</h3>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>✕</button>
         </div>
 
         <button className="new-chat-btn" onClick={handleNewChat}>+ New Chat</button>
@@ -127,7 +142,21 @@ function Chat() {
       </div>
 
       <div className="chat-main">
-        <h2>Medicure Chatbot</h2>
+        <div className="chat-main-header">
+          <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          <h2>Medicure Chatbot</h2>
+          <div className="profile-dropdown">
+            <button className="profile-icon" onClick={() => setShowDropdown(!showDropdown)}>
+              👤
+            </button>
+            <div className={`dropdown-menu ${showDropdown ? 'show' : ''}`}>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          </div>
+        </div>
+
         <div className="chat-box">
           {selectedHistory ? (
             <div className="chat-messages">
