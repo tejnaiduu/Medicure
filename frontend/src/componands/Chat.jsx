@@ -1,4 +1,3 @@
-// Chat.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Chat.css';
@@ -61,11 +60,7 @@ function Chat() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      const newChat = {
-        _id: Date.now(),
-        query,
-        response: res.data.response
-      };
+      const newChat = res.data.chat; // ✅ real MongoDB chat object with _id
       setHistory(prev => [...prev, newChat]);
       setSelectedHistory(newChat);
     } catch (err) {
@@ -132,7 +127,7 @@ function Chat() {
         <ul className="chat-history-list">
           {history.length === 0 && <p className="no-history">No history yet</p>}
           {history.map((item, index) => (
-            <li key={item._id || index} className={selectedHistory === item ? 'selected' : ''}>
+            <li key={item._id || index} className={selectedHistory?._id === item._id ? 'selected' : ''}>
               <button onClick={() => handleSelectHistory(item)}>
                 {item.query.slice(0, 30)}...
               </button>
