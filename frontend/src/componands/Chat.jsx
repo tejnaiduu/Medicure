@@ -80,7 +80,7 @@ function Chat() {
 
   const handleDelete = async id => {
     try {
-      await axios.delete(`${API_URL}/${id}`, {
+      await axios.delete(`${API_URL}/history/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchHistory();
