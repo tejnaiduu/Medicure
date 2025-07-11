@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 function Chat() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [query, setQuery] = useState('');
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
@@ -31,7 +32,7 @@ function Chat() {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/history', {
+      const res = await axios.get(`${API_URL}/history`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setHistory(res.data.history);
@@ -55,7 +56,7 @@ function Chat() {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/chat',
+        `${API_URL}/chat`,
         { query },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -79,7 +80,7 @@ function Chat() {
 
   const handleDelete = async id => {
     try {
-      await axios.delete(`http://localhost:5000/history/${id}`, {
+      await axios.delete(`${API_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchHistory();
@@ -93,7 +94,7 @@ function Chat() {
 
   const handleDeleteAll = async () => {
     try {
-      await axios.delete(`http://localhost:5000/history`, {
+      await axios.delete(`${API_URL}/history`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setHistory([]);

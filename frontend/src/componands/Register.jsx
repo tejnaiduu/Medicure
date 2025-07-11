@@ -4,6 +4,7 @@ import './Register.css';
 import { useNavigate } from 'react-router-dom';
 
 function Register() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ function Register() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/register', form);
+      const res = await axios.post(`${API_URL}/register`, form);
       alert(res.data.message);
       navigate('/login');
     } catch (err) {
