@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Chat() {
   const [query, setQuery] = useState('');
-  const [response, setResponse] = useState('');
   const [history, setHistory] = useState([]);
   const [selectedHistory, setSelectedHistory] = useState(null);
   const navigate = useNavigate();
@@ -31,20 +30,29 @@ function Chat() {
     e.preventDefault();
     if (!query.trim()) return;
 
+    const tempChat = {
+      _id: Date.now(),
+      query,
+      response: 'Analyzing...'
+    };
+
+    setSelectedHistory(tempChat);  // Show temporary message
+    setQuery('');
+
     try {
       const res = await axios.post(
         'http://localhost:5000/chat',
         { query },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       const newChat = {
-        _id: Date.now(), // Temporary ID for frontend
+        _id: Date.now(),
         query,
         response: res.data.response
       };
       setHistory(prev => [...prev, newChat]);
-      setSelectedHistory(newChat);
-      setQuery('');
+      setSelectedHistory(newChat);  // Update with real response
     } catch (err) {
       alert('Error sending message');
     }
@@ -83,7 +91,6 @@ function Chat() {
   const handleNewChat = () => {
     setSelectedHistory(null);
     setQuery('');
-    setResponse('');
   };
 
   const handleLogout = () => {
@@ -123,9 +130,13 @@ function Chat() {
         <h2>Medicure Chatbot</h2>
         <div className="chat-box">
           {selectedHistory ? (
-            <div className="chat-message">
-              <p><strong>You:</strong> {selectedHistory.query}</p>
-              <p><strong>Bot:</strong> {selectedHistory.response}</p>
+            <div className="chat-messages">
+              <div className="message user-message">
+                <p>{selectedHistory.query}</p>
+              </div>
+              <div className="message bot-message">
+                <p>{selectedHistory.response}</p>
+              </div>
             </div>
           ) : (
             <p className="no-chat-selected">Start a new conversation or select one from the left.</p>
