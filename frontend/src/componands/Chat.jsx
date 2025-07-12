@@ -60,7 +60,7 @@ function Chat() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      const newChat = res.data.chat; // ✅ real MongoDB chat object with _id
+      const newChat = res.data.chat;
       setHistory(prev => [...prev, newChat]);
       setSelectedHistory(newChat);
     } catch (err) {
@@ -113,7 +113,7 @@ function Chat() {
     <div className="chat-page">
       <div className={`chat-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <h3>Medicure</h3>
+          <h3>👩‍⚕️ Medicure</h3>
           <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>✕</button>
         </div>
 
@@ -129,9 +129,9 @@ function Chat() {
           {history.map((item, index) => (
             <li key={item._id || index} className={selectedHistory?._id === item._id ? 'selected' : ''}>
               <button onClick={() => handleSelectHistory(item)}>
-                {item.query.slice(0, 30)}...
+                💬 {item.query.slice(0, 25)}...
               </button>
-              <span onClick={() => handleDelete(item._id)} title="Delete" className="delete-icon">🗙</span>
+              <span onClick={() => handleDelete(item._id)} className="delete-icon">🗙</span>
             </li>
           ))}
         </ul>
@@ -142,7 +142,7 @@ function Chat() {
           <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
             {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-          <h2>Medicure Chatbot</h2>
+          <h2><span style={{ color: '#00bfff', fontWeight: 'bold' }}>👩‍⚕️ Medicure</span> — Your Health Companion</h2>
           <div className="profile-dropdown">
             <button className="profile-icon" onClick={() => setShowDropdown(!showDropdown)}>
               👤
@@ -164,9 +164,14 @@ function Chat() {
               </div>
             </div>
           ) : (
-            <p className="no-chat-selected">Start a new conversation or select one from the left.</p>
+            <div className="welcome-message">
+              <h3>Hi there! 👋</h3>
+              <p>I’m <strong>Medicure</strong> — your AI health assistant.</p>
+              <p>Ask me any health-related question and I’ll try to help.</p>
+            </div>
           )}
         </div>
+
         <form onSubmit={handleSubmit} className="chat-input">
           <input
             type="text"
